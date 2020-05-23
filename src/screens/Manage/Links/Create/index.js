@@ -1,32 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ManageLayout from '../../../Layouts/Manage';
 
 const SignIn = () => {
   return (
-    <div>
+    <ManageLayout>
       <h1>New</h1>
       <div>
         <form>
-          <div>
+          <div className="form-group">
             <label>Label</label>
-            <input type="text" />
+            <input type="text" className="form-control" aria-describedby="emailHelp" />
           </div>
-          <div>
+          <div className="form-group">
             <label>Url</label>
-            <input type="text" />
+            <input className="form-control" type="text" />
           </div>
-          <div>
-            <label>
-              <input type="checkbox" />
+          <div className="form-group form-check">
+            <input type="checkbox" className="form-check-input" id="is_social" />
+            <label className="form-check-label" for="is_social">
               Is Social
             </label>
           </div>
           <div>
-            <button type="submit">Create</button>
+            <button className="btn btn-primary" type="submit">
+              Create
+            </button>
           </div>
         </form>
       </div>
-    </div>
+    </ManageLayout>
   );
 };
 

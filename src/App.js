@@ -7,11 +7,41 @@ import ManageLinks from './screens/Manage/Links';
 import ManageLinksCreate from './screens/Manage/Links/Create';
 import ManageLinksEdit from './screens/Manage/Links/Edit';
 
+const defaultRoutes = [
+  {
+    path: '/sign-in',
+    component: SignIn,
+  },
+  {
+    path: '/sign-up',
+    component: SignUp,
+  },
+];
+const signedInRoutes = [
+  {
+    path: '/manage/links',
+    component: ManageLinks,
+  },
+  {
+    path: '/manage/links/create',
+    component: ManageLinksCreate,
+  },
+  {
+    path: '/manage/links/edit',
+    component: ManageLinksEdit,
+  },
+];
+const signedIn = true;
 const App = () => {
+  const routes = signedIn ? signedInRoutes : defaultRoutes;
+  const routeComponents = routes.map(({ path, component }, key) => (
+    <Route exact path={path} component={component} key={key} />
+  ));
+
   return (
     <Router>
       <div>
-        <nav>
+        {/* <nav>
           <ul>
             <li>
               <Link to="/sign-in">Sign-in</Link>
@@ -29,27 +59,8 @@ const App = () => {
               <Link to="/manage/links/edit">Edit Link</Link>
             </li>
           </ul>
-        </nav>
-        <Switch>
-          <Route path="/sign-in">
-            <SignIn />
-          </Route>
-          <Route path="/sign-up">
-            <SignUp />
-          </Route>
-          <Route path="/manage/links/create">
-            <ManageLinksCreate />
-          </Route>
-          <Route path="/manage/links/edit">
-            <ManageLinksEdit />
-          </Route>
-          <Route path="/manage/links">
-            <ManageLinks />
-          </Route>
-          <Route path="/">
-            <h1>404</h1>
-          </Route>
-        </Switch>
+        </nav> */}
+        <Switch>{routeComponents}</Switch>
       </div>
     </Router>
   );
