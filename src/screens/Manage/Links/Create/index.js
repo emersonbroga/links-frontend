@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import ManageLayout from '../../../Layouts/Manage';
 
-const SignIn = () => {
+const Create = () => {
   return (
     <ManageLayout>
       <h1>New</h1>
@@ -16,14 +15,15 @@ const SignIn = () => {
             <label>Url</label>
             <input className="form-control" type="text" />
           </div>
-          <div className="form-group form-check">
-            <input type="checkbox" className="form-check-input" id="is_social" />
-            <label className="form-check-label" for="is_social">
+          <div class="form-group form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" />
+              <span class="form-check-sign"></span>
               Is Social
             </label>
           </div>
           <div>
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-primary btn-round" type="submit">
               Create
             </button>
           </div>
@@ -33,4 +33,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Create;

@@ -1,0 +1,15 @@
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import './ui-kit/now-ui-kit.scss';
+
+.flip-h {
+  transform: scale(-1, 1);
+}
+.flip-v {
+  transform: scale(1, -1);
+}
+.fill-light {
+  fill: $light;
+}
+.fill-default {
+  fill: $default-color;
+}

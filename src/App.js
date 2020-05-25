@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import Home from './screens/Home';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import ManageLinks from './screens/Manage/Links';
@@ -16,7 +17,12 @@ const defaultRoutes = [
     path: '/sign-up',
     component: SignUp,
   },
+  {
+    path: '/',
+    component: Home,
+  },
 ];
+
 const signedInRoutes = [
   {
     path: '/manage/links',
@@ -33,35 +39,14 @@ const signedInRoutes = [
 ];
 const signedIn = true;
 const App = () => {
-  const routes = signedIn ? signedInRoutes : defaultRoutes;
+  const routes = signedIn ? [...defaultRoutes, ...signedInRoutes] : defaultRoutes;
   const routeComponents = routes.map(({ path, component }, key) => (
     <Route exact path={path} component={component} key={key} />
   ));
 
   return (
     <Router>
-      <div>
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/sign-in">Sign-in</Link>
-            </li>
-            <li>
-              <Link to="/sign-up">Sign-up</Link>
-            </li>
-            <li>
-              <Link to="/manage/links">Links</Link>
-            </li>
-            <li>
-              <Link to="/manage/links/create">Create Link</Link>
-            </li>
-            <li>
-              <Link to="/manage/links/edit">Edit Link</Link>
-            </li>
-          </ul>
-        </nav> */}
-        <Switch>{routeComponents}</Switch>
-      </div>
+      <Switch>{routeComponents}</Switch>
     </Router>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import ManageLayout from '../../Layouts/Manage';
+import Icon from '../../../components/Icon';
 
 const Links = () => {
   return (
@@ -19,53 +20,49 @@ const Links = () => {
       <div>
         {[1, 2, 3, 4, 5].map((item) => {
           return (
-            <div className="row mb-2" key={item}>
-              <div className="col">
-                <img src="https://via.placeholder.com/100" alt="Link" />
+            <div className="row mb-2 pl-3 pr-3" key={item}>
+              <div className="pr-3">
+                <img src="https://via.placeholder.com/100" alt="Link" className="rounded" />
               </div>
-              <div className="col align-self-center">
-                <span>Facebook</span>
+              <div className="align-self-center">
+                <span className="text-primary">Facebook</span>
                 <br />
-                <span>https://facebook.com</span>
-              </div>
-              <div className="col text-right align-self-center">
-                <span>
-                  <span className="badge badge-success">155</span> clicks
-                </span>
+                <span className="text-default">https://facebook.com</span> <br />
+                <span className="text-default ">155 clicks</span>
               </div>
             </div>
           );
         })}
       </div>
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">
+      <div className="text-xs-center mt-5">
+        <ul className="pagination ">
           <li className="page-item">
-            <a className="page-link" href="#">
-              Previous
+            <a className="page-link" href="?page-0">
+              <Icon id="chevron" className="flip-h fill-default" />
             </a>
           </li>
           <li className="page-item">
-            <a className="page-link" href="#">
+            <a className="page-link" href="?page-1">
               1
             </a>
           </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
+          <li className="page-item active">
+            <a className="page-link " href="?page-2">
               2
             </a>
           </li>
           <li className="page-item">
-            <a className="page-link" href="#">
+            <a className="page-link" href="?page-3">
               3
             </a>
           </li>
           <li className="page-item">
-            <a className="page-link" href="#">
-              Next
+            <a className="page-link" href="?page-4">
+              <Icon id="chevron" className="fill-default" />
             </a>
           </li>
         </ul>
-      </nav>
+      </div>
     </ManageLayout>
   );
 };
