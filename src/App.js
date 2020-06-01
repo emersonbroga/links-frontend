@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './screens/Home';
@@ -7,6 +8,7 @@ import SignUp from './screens/SignUp';
 import ManageLinks from './screens/Manage/Links';
 import ManageLinksCreate from './screens/Manage/Links/Create';
 import ManageLinksEdit from './screens/Manage/Links/Edit';
+import NotFound from './screens/NotFound';
 
 const defaultRoutes = [
   {
@@ -37,9 +39,11 @@ const signedInRoutes = [
     component: ManageLinksEdit,
   },
 ];
-const signedIn = true;
-const App = () => {
-  const routes = signedIn ? [...defaultRoutes, ...signedInRoutes] : defaultRoutes;
+
+const extraRoutes = [{ path: '*', component: NotFound }];
+const App = (props) => {
+  const { account } = props;
+  const routes = account ? [...defaultRoutes, ...signedInRoutes, ...extraRoutes] : [...defaultRoutes, ...extraRoutes];
   const routeComponents = routes.map(({ path, component }, key) => (
     <Route exact path={path} component={component} key={key} />
   ));
@@ -51,4 +55,8 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return { account: state.signIn.account };
+};
+
+export default connect(mapStateToProps)(App);
