@@ -1,7 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { getAccount } from '../../helpers/account';
 
 const Home = () => {
+  const [account, setAccout] = useState(getAccount());
+
+  if (account) {
+    return <Redirect to="/manage/links" />;
+  }
+
   return (
     <div className="container">
       <h1 className="text-center text-primary">Links</h1>
