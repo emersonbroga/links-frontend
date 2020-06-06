@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './screens/Home';
@@ -42,9 +43,7 @@ const signedInRoutes = [
 ];
 
 const extraRoutes = [{ path: '*', component: NotFound }];
-const App = () => {
-  const [account] = useState(getAccount());
-
+const App = ({ account }) => {
   const routes = account ? [...defaultRoutes, ...signedInRoutes, ...extraRoutes] : [...defaultRoutes, ...extraRoutes];
   const routeComponents = routes.map(({ path, component }, key) => (
     <Route exact path={path} component={component} key={key} />
@@ -56,4 +55,10 @@ const App = () => {
     </Router>
   );
 };
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    account: getAccount(),
+  };
+};
+
+export default connect(mapStateToProps)(App);
