@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
-import { get } from '../../helpers/content';
 import FormGroup from '../../components/FormGroup';
 import { signIn } from './SignInActions';
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
-import { get } from '../../helpers/content';
 import FormGroup from '../../components/FormGroup';
 import { signUp } from './SignUpActions';
 
@@ -25,8 +24,8 @@ const SignUp = (props) => {
       <h1>Sign Up</h1>
       <div className="d-flex flex-column h-100">
         <form onSubmit={submitHandler} noValidate>
-          <FormGroup name="email" errors={errors} label="Email" autocomplete="disabled" />
-          <FormGroup name="password" errors={errors} label="Password" type="password" autocomplete="off" />
+          <FormGroup name="email" errors={errors} label="Email" />
+          <FormGroup name="password" errors={errors} label="Password" type="password" />
           <FormGroup
             name="password_confirmation"
             errors={errors}
