@@ -1,34 +1,38 @@
-import React from 'react';
-import ManageLayout from '../../../Layouts/Manage';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useParams, Redirect } from 'react-router-dom';
 
-const Edit = () => {
+import FormGroup from '../../../../components/FormGroup';
+import FormCheck from '../../../../components/FormCheck';
+import ManageLayout from '../../../Layouts/Manage';
+import { linkFetchSingle, linkEdit } from '../LinkActions';
+
+const Edit = ({ link, errors, loading, linkFetchSingle, linkEdit }) => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    linkFetchSingle({ id });
+  }, [linkFetchSingle]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (loading) return;
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    linkEdit(id, data);
+  };
+
   return (
     <ManageLayout>
-      <h1>New</h1>
+      <h1>Edit</h1>
       <div>
-        <form>
-          <div className="form-group">
-            <label>Label</label>
-            <input type="text" className="form-control" aria-describedby="emailHelp" />
-          </div>
-          <div className="form-group">
-            <label>Url</label>
-            <input className="form-control" type="text" />
-          </div>
-          <div class="form-group form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" />
-              <span class="form-check-sign"></span>
-              Is Social
-            </label>
-          </div>
-          <div className="form-group">
-            <label>155 clicks</label>
-          </div>
-
+        <form onSubmit={submitHandler}>
+          <FormGroup name="label" errors={errors} label="Label" data={link} />
+          <FormGroup name="url" errors={errors} label="Url" data={link} />
+          <FormCheck name="isSocial" errors={errors} label="Is Social" data={link} />
           <div>
             <button className="btn btn-primary btn-round" type="submit">
-              Edit
+              {loading ? 'Loading... ' : 'Edit'}
             </button>
           </div>
         </form>
@@ -37,4 +41,12 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+const mapStateToProps = (state) => {
+  return {
+    link: state.link.link,
+    errors: state.link.errors,
+    loading: state.link.loading,
+  };
+};
+
+export default connect(mapStateToProps, { linkFetchSingle, linkEdit })(Edit);

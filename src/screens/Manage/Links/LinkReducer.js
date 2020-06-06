@@ -1,5 +1,5 @@
 import { getApiData, getApiErrors, getApiMetaData } from '../../../helpers/api';
-import { LINK_CREATE, LINK_FETCH } from './LinkActions';
+import { LINK_CREATE, LINK_EDIT, LINK_FETCH, LINK_FETCH_SINGLE } from './LinkActions';
 
 const initalState = {
   link: null,
@@ -15,10 +15,17 @@ export default function (state = initalState, action) {
 
   switch (type) {
     case `${LINK_CREATE}_LOADING`:
-    case `${LINK_FETCH}_LOADING`: {
+    case `${LINK_FETCH}_LOADING`:
+    case `${LINK_EDIT}_LOADING`: {
       return { ...state, loading: true };
     }
     case LINK_CREATE: {
+      if (errors) {
+        return { ...state, loading: false, errors };
+      }
+      return { ...state, errors, loading: false, link: data };
+    }
+    case LINK_EDIT: {
       if (errors) {
         return { ...state, loading: false, errors };
       }
@@ -29,6 +36,12 @@ export default function (state = initalState, action) {
         return { ...state, loading: false, errors };
       }
       return { ...state, errors, loading: false, links: data };
+    }
+    case LINK_FETCH_SINGLE: {
+      if (errors) {
+        return { ...state, loading: false, errors };
+      }
+      return { ...state, errors, loading: false, link: data };
     }
     default: {
       return state;

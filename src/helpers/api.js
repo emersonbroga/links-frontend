@@ -14,6 +14,10 @@ export const apiPost = (path, data = {}) => {
   const url = getApiUrl(path);
   return axios.post(url, data);
 };
+export const apiPut = (path, data = {}) => {
+  const url = getApiUrl(path);
+  return axios.put(url, data);
+};
 
 export const getApiData = (payload) => {
   return get(payload, 'data.data', null);

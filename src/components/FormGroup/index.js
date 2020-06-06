@@ -1,23 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { get } from '../../helpers/content';
 
 const FormGroup = (props) => {
-  const { name, label, errors, type } = props;
+  const { data, name, label, errors, type } = props;
   const error = get(errors, name, null);
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    const value = get(data, name, undefined);
+    if (value !== undefined) setValue(value);
+  }, [data]);
 
   const inputType = type || 'text';
   const feedback = error ? <div className="invalid-feedback">{error}</div> : null;
   const inputClass = error ? 'form-control is-invalid' : 'form-control';
+  const placeholder = props.placeholder || '';
 
-  const otherProps = {};
-  if (props.placeholder) otherProps.placeholder = props.placeholder;
-  if (props.value) otherProps.value = props.value;
-  if (props.onChange) otherProps.value = props.onChange;
+  const handleChange = (e) => {
+    if (value === e.target.value) return;
+    setValue(e.target.value);
+    if (props.onChange) props.onChange(e);
+  };
+
+  const inputProps = {
+    onChange: handleChange,
+    type: inputType,
+    className: inputClass,
+    placeholder,
+    name,
+    value,
+  };
 
   return (
     <div className="form-group">
       <label>{label}</label>
-      <input type={inputType} className={inputClass} name={name} {...otherProps} />
+      <input {...inputProps} />
       {feedback}
     </div>
   );

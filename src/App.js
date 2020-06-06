@@ -37,7 +37,7 @@ const signedInRoutes = [
     component: ManageLinksCreate,
   },
   {
-    path: '/manage/links/edit',
+    path: '/manage/links/edit/:id',
     component: ManageLinksEdit,
   },
 ];
