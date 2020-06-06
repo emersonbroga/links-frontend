@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import ManageLayout from '../../Layouts/Manage';
 import Icon from '../../../components/Icon';
+import { linkFetch } from './LinkActions';
 
-const Links = () => {
+const Links = ({ links, loading, linkFetch }) => {
+  useEffect(() => {
+    linkFetch();
+  }, [linkFetch]);
+
   return (
     <ManageLayout>
       <div className="row">
@@ -18,21 +24,22 @@ const Links = () => {
         </div>
       </div>
       <div>
-        {[1, 2, 3, 4, 5].map((item) => {
+        {links.map((item) => {
           return (
-            <div className="row mb-2 pl-3 pr-3" key={item}>
+            <div className="row mb-2 pl-3 pr-3" key={item.id}>
               <div className="pr-3">
                 <img src="https://via.placeholder.com/100" alt="Link" className="rounded" />
               </div>
               <div className="align-self-center">
-                <span className="text-primary">Facebook</span>
+                <span className="text-primary">{item.label}</span>
                 <br />
-                <span className="text-default">https://facebook.com</span> <br />
+                <span className="text-default">{item.link}</span> <br />
                 <span className="text-default ">155 clicks</span>
               </div>
             </div>
           );
         })}
+        {loading ? <strong>Loading...</strong> : null}
       </div>
       <div className="text-xs-center mt-5">
         <ul className="pagination ">
@@ -66,5 +73,12 @@ const Links = () => {
     </ManageLayout>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    links: state.link.links,
+    errors: state.link.errors,
+    loading: state.link.loading,
+  };
+};
 
-export default Links;
+export default connect(mapStateToProps, { linkFetch })(Links);
