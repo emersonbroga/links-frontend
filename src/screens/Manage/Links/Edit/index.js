@@ -4,15 +4,21 @@ import { useParams, Redirect } from 'react-router-dom';
 
 import FormGroup from '../../../../components/FormGroup';
 import FormCheck from '../../../../components/FormCheck';
+import FormSubmit from '../../../../components/FormSubmit';
+
 import ManageLayout from '../../../Layouts/Manage';
 import { linkFetchSingle, linkEdit } from '../LinkActions';
 
-const Edit = ({ link, errors, loading, linkFetchSingle, linkEdit }) => {
+const Edit = ({ link, errors, loading, linkFetchSingle, linkEdit, redirectBack }) => {
   const { id } = useParams();
 
   useEffect(() => {
     linkFetchSingle({ id });
-  }, [linkFetchSingle]);
+  }, [id, linkFetchSingle]);
+
+  if (redirectBack) {
+    return <Redirect to="/manage/links" />;
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -30,11 +36,7 @@ const Edit = ({ link, errors, loading, linkFetchSingle, linkEdit }) => {
           <FormGroup name="label" errors={errors} label="Label" data={link} />
           <FormGroup name="url" errors={errors} label="Url" data={link} />
           <FormCheck name="isSocial" errors={errors} label="Is Social" data={link} />
-          <div>
-            <button className="btn btn-primary btn-round" type="submit">
-              {loading ? 'Loading... ' : 'Edit'}
-            </button>
-          </div>
+          <FormSubmit label="Edit" loading={loading} />
         </form>
       </div>
     </ManageLayout>
@@ -46,6 +48,7 @@ const mapStateToProps = (state) => {
     link: state.link.link,
     errors: state.link.errors,
     loading: state.link.loading,
+    redirectBack: state.link.redirectBack,
   };
 };
 

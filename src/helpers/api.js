@@ -1,5 +1,12 @@
 import axios from 'axios';
 import { get } from './content';
+import { getToken } from './account';
+
+const getHeaders = () => {
+  return {
+    Authorization: `Bearer ${getToken()}`,
+  };
+};
 
 export const getApiUrl = (path) => {
   return `${process.env.REACT_APP_API_URL}${path}`;
@@ -7,16 +14,26 @@ export const getApiUrl = (path) => {
 
 export const apiGet = (path, params = {}) => {
   const url = getApiUrl(path);
-  return axios.get(url);
+  const options = { headers: getHeaders() };
+  return axios.get(url, options);
 };
 
 export const apiPost = (path, data = {}) => {
   const url = getApiUrl(path);
-  return axios.post(url, data);
+  const options = { headers: getHeaders() };
+  return axios.post(url, data, options);
 };
+
 export const apiPut = (path, data = {}) => {
   const url = getApiUrl(path);
-  return axios.put(url, data);
+  const options = { headers: getHeaders() };
+  return axios.put(url, data, options);
+};
+
+export const apiDelete = (path, data = {}) => {
+  const url = getApiUrl(path);
+  const options = { headers: getHeaders() };
+  return axios.delete(url, options);
 };
 
 export const getApiData = (payload) => {

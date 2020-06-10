@@ -1,15 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import ManageLayout from '../../Layouts/Manage';
+import DeleteConfirmation from '../../../components/DeleteConfirmation';
 import Icon from '../../../components/Icon';
-import { linkFetch } from './LinkActions';
+import { linkFetch, linkDelete } from './LinkActions';
+import { isEmpty } from '../../../helpers/content';
 
-const Links = ({ links, loading, linkFetch }) => {
+const Links = ({ links, loading, linkFetch, linkDelete, refresh }) => {
+  const [itemToRemove, setItemToRemove] = useState(null);
+
   useEffect(() => {
-    if (links) linkFetch();
-  }, [links, linkFetch]);
+    linkFetch();
+  }, [refresh, linkFetch]);
+
+  const confirmationProps = !!itemToRemove
+    ? {
+        render: !!itemToRemove,
+        title: 'Are you sure?',
+        onConfirm: () => {
+          linkDelete(itemToRemove.id);
+          setItemToRemove(null);
+        },
+        onCancel: () => setItemToRemove(null),
+      }
+    : {};
 
   return (
     <ManageLayout>
@@ -24,57 +40,46 @@ const Links = ({ links, loading, linkFetch }) => {
         </div>
       </div>
       <div>
-        {!links
-          ? null
-          : links.map((item) => {
-              return (
-                <div className="row mb-2 pl-3 pr-3" key={item.id}>
-                  <div className="pr-3">
-                    <img src="https://via.placeholder.com/100" alt="Link" className="rounded" />
-                  </div>
-                  <div className="align-self-center">
-                    <span className="text-primary">{item.label}</span>
-                    <br />
-                    <span className="text-default">{item.url}</span> <br />
-                    <a className="mr-5" href={`/manage/links/edit/${item.id}`}>
-                      Edit
-                    </a>
-                    <span className="text-default ">155 clicks</span>
+        {isEmpty(links) ? (
+          <strong>No data...</strong>
+        ) : (
+          links.map((item) => {
+            const imageClass = item.isSocial ? 'rounded-circle' : 'rounded';
+            const deleteClick = (e) => setItemToRemove(item);
+            const border =
+              itemToRemove && itemToRemove.id === item.id
+                ? 'border border-danger rounded'
+                : 'border border-transparent';
+
+            return (
+              <div className={`pb-2 pt-2 pl-3 pr-3 d-flex flex-row justify-content-between ${border}`} key={item.id}>
+                <div className="pr-3">
+                  <img src="https://source.unsplash.com/random/100x100" alt="Link" className={imageClass} />
+                  <br />
+                  <div className="text-center text-small">
+                    <small>{item.id}</small>
                   </div>
                 </div>
-              );
-            })}
+                <div className="align-self-center">
+                  <span className="text-primary clearfix">{item.label}</span>
+                  <span className="text-default clearfix d-inline-block text-truncate">{item.url}</span>
+                </div>
+                <div className="ml-auto p-2 clearfix">
+                  <a className="pr-2" href={`/manage/links/edit/${item.id}`}>
+                    <Icon id="edit" className="fill-primary" />
+                  </a>
+
+                  <button type="button" className="btn btn-clear" onClick={deleteClick}>
+                    <Icon id="trash" className="fill-default" />
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        )}
         {loading ? <strong>Loading...</strong> : null}
       </div>
-      <div className="text-xs-center mt-5">
-        <ul className="pagination ">
-          <li className="page-item">
-            <a className="page-link" href="?page-0">
-              <Icon id="chevron" className="flip-h fill-default" />
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="?page-1">
-              1
-            </a>
-          </li>
-          <li className="page-item active">
-            <a className="page-link " href="?page-2">
-              2
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="?page-3">
-              3
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="?page-4">
-              <Icon id="chevron" className="fill-default" />
-            </a>
-          </li>
-        </ul>
-      </div>
+      <DeleteConfirmation {...confirmationProps} />
     </ManageLayout>
   );
 };
@@ -86,4 +91,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { linkFetch })(Links);
+export default connect(mapStateToProps, { linkFetch, linkDelete })(Links);

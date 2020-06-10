@@ -1,4 +1,4 @@
-import { setCookie, getCookie } from './storage';
+import { setCookie, getCookie, removeCookie } from './storage';
 
 export const COOKIE_ACCOUNT = 'acc';
 export const COOKIE_TOKEN = 'tk';
@@ -11,6 +11,7 @@ const options = { expires };
 
 export const setAccount = (account) => setCookie(COOKIE_ACCOUNT, account, options);
 export const getAccount = () => getCookie(COOKIE_ACCOUNT);
+export const removeAccount = () => removeCookie(COOKIE_ACCOUNT);
 
 export const setToken = (token) => setCookie(COOKIE_TOKEN, token, options);
 export const getToken = () => getCookie(COOKIE_TOKEN);

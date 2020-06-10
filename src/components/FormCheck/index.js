@@ -9,24 +9,25 @@ const FormCheck = (props) => {
   useEffect(() => {
     const isChecked = get(data, name, undefined);
     if (isChecked !== undefined) setIsChecked(isChecked);
-  }, [data]);
+  }, [name, data]);
 
   const feedback = error ? <div className="invalid-feedback">{error}</div> : null;
   const inputClass = error ? 'form-check-input is-invalid' : 'form-check-input';
   const placeholder = props.placeholder || '';
 
   const handleChange = (e) => {
-    if (isChecked === e.target.value) return;
-    setIsChecked(!!e.target.value);
+    if (isChecked === e.target.checked) return;
+    setIsChecked(!!e.target.checked);
     if (props.onChange) props.onChange(e);
   };
+
   const inputProps = {
     onChange: handleChange,
     type: 'checkbox',
     className: inputClass,
     placeholder,
     name,
-    checked: isChecked,
+    checked: !!isChecked,
   };
 
   return (

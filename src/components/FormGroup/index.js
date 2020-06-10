@@ -4,12 +4,12 @@ import { get } from '../../helpers/content';
 const FormGroup = (props) => {
   const { data, name, label, errors, type } = props;
   const error = get(errors, name, null);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     const value = get(data, name, undefined);
     if (value !== undefined) setValue(value);
-  }, [data]);
+  }, [name, data]);
 
   const inputType = type || 'text';
   const feedback = error ? <div className="invalid-feedback">{error}</div> : null;
@@ -28,9 +28,8 @@ const FormGroup = (props) => {
     className: inputClass,
     placeholder,
     name,
-    value,
+    value: value || '',
   };
-
   return (
     <div className="form-group">
       <label>{label}</label>
