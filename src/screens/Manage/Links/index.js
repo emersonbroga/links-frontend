@@ -54,7 +54,7 @@ const Links = ({ links, loading, linkFetch, linkDelete, refresh }) => {
             return (
               <div className={`pb-2 pt-2 pl-3 pr-3 d-flex flex-row justify-content-between ${border}`} key={item.id}>
                 <div className="pr-3">
-                  <img src="https://source.unsplash.com/random/100x100" alt="Link" className={imageClass} />
+                  <img src="https://via.placeholder.com/100" alt="Link" className={imageClass} />
                   <br />
                   <div className="text-center text-small">
                     <small>{item.id}</small>
@@ -68,7 +68,6 @@ const Links = ({ links, loading, linkFetch, linkDelete, refresh }) => {
                   <a className="pr-2" href={`/manage/links/edit/${item.id}`}>
                     <Icon id="edit" className="fill-primary" />
                   </a>
-
                   <button type="button" className="btn btn-clear" onClick={deleteClick}>
                     <Icon id="trash" className="fill-default" />
                   </button>

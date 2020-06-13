@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
 
 import Icon from '../../../components/Icon';
 import { removeAccount } from '../../../helpers/account';
@@ -13,7 +12,7 @@ const ManageLayout = ({ children, history }) => {
   };
 
   if (redirectBack) {
-    return <Redirect to="/" push />;
+    return (window.location.href = '/');
   }
 
   return (

@@ -35,7 +35,7 @@ const SignIn = (props) => {
         <div className="container text-center fixed-bottom pb-5">
           <div className="text-muted">Don't have an account?</div>
           <Link className="btn btn-secondary btn-round" to="/sign-up">
-            Sign In
+            Sign Up
           </Link>
         </div>
       </div>

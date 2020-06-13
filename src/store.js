@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import signInReducer from './screens/SignIn/SignInReducer';
 import signUpReducer from './screens/SignUp/SignUpReducer';
 import linkCreateReducer from './screens/Manage/Links/LinkReducer';
+import tokenRefresherReducer from './components/TokenRefresher/TokenRefresherReducer';
 
 const loaderMiddleware = (store) => (next) => (action) => {
   const isPromise = action.payload instanceof Promise;
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   signIn: signInReducer,
   signUp: signUpReducer,
   link: linkCreateReducer,
+  tokenRefresher: tokenRefresherReducer,
 });
 
 const middlewares = applyMiddleware(loaderMiddleware, ReduxPromise);

@@ -1,11 +1,23 @@
 import axios from 'axios';
 import { get } from './content';
-import { getToken } from './account';
+import { getToken, getRefreshToken } from './account';
 
 const getHeaders = () => {
   return {
     Authorization: `Bearer ${getToken()}`,
   };
+};
+
+export const apiRefreshToken = () => {
+  const url = getApiUrl('/auth/refresh');
+  const refreshToken = getRefreshToken();
+  const options = {
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+    },
+  };
+  if (!refreshToken) return Promise.resolve({});
+  return axios.post(url, {}, options);
 };
 
 export const getApiUrl = (path) => {

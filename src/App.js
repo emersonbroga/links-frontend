@@ -10,8 +10,6 @@ import ManageLinksCreate from './screens/Manage/Links/Create';
 import ManageLinksEdit from './screens/Manage/Links/Edit';
 import NotFound from './screens/NotFound';
 
-import { getAccount } from './helpers/account';
-
 const defaultRoutes = [
   {
     path: '/sign-in',
@@ -43,7 +41,9 @@ const signedInRoutes = [
 ];
 
 const extraRoutes = [{ path: '*', component: NotFound }];
-const App = ({ account }) => {
+const App = ({ account, loading }) => {
+  if (loading) return <h1>Loading...</h1>;
+
   const routes = account ? [...defaultRoutes, ...signedInRoutes, ...extraRoutes] : [...defaultRoutes, ...extraRoutes];
   const routeComponents = routes.map(({ path, component }, key) => (
     <Route exact path={path} component={component} key={key} />
@@ -56,8 +56,11 @@ const App = ({ account }) => {
   );
 };
 const mapStateToProps = (state) => {
+  const account = state.tokenRefresher.account || state.signIn.account || state.signUp.account;
+
   return {
-    account: getAccount(),
+    account,
+    loading: state.tokenRefresher.loading,
   };
 };
 

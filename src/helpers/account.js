@@ -9,6 +9,13 @@ expires.setFullYear(expires.getFullYear() + 1);
 
 const options = { expires };
 
+export const getTokenExpiration = (token) => {
+  if (!token) return 0;
+  const [, payload] = token.split('.');
+  const data = payload ? JSON.parse(atob(payload)) : {};
+  return data.exp || 0;
+};
+
 export const setAccount = (account) => setCookie(COOKIE_ACCOUNT, account, options);
 export const getAccount = () => getCookie(COOKIE_ACCOUNT);
 export const removeAccount = () => removeCookie(COOKIE_ACCOUNT);

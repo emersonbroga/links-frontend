@@ -38,8 +38,7 @@ export default function (state = initalState, action) {
       return { ...state, errors, loading: false, link: data };
     }
     case LINK_DELETE: {
-      const links = data ? state.links.filter((l) => l.id !== data.id) : state.links;
-      return { ...state, errors, loading: false, links, link: null, refresh: true };
+      return { ...state, errors, loading: false, link: null, refresh: true };
     }
     case LINK_DELETE_ALERT: {
       return { ...state, errors, loading: false };
