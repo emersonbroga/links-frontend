@@ -7,6 +7,8 @@ export const getApiUrl = (path) => {
 
 export const getHeaders = () => {
   const token = getToken();
+
+  console.log('*** getHeaders.token', token);
   if (!token) return {};
 
   return {
@@ -28,6 +30,14 @@ export const apiPut = (path, data = {}) => {
     headers: getHeaders(),
   };
   return axios.put(url, data, options);
+};
+
+export const apiDelete = (path, data = {}) => {
+  const url = getApiUrl(path);
+  const options = {
+    headers: getHeaders(),
+  };
+  return axios.delete(url, options);
 };
 
 export const apiGet = (path) => {
