@@ -21,8 +21,6 @@ const FormGroup = (props) => {
     onChange: handleChange,
   };
 
-  console.log('*** FormGroup.inputProps', inputProps);
-
   return (
     <div className="form-group">
       <label>{label}</label>

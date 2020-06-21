@@ -21,8 +21,6 @@ const FormCheck = (props) => {
     onChange: handleChange,
   };
 
-  console.log('*** FormCheck.inputProps', inputProps);
-
   return (
     <div className="from-group form-check">
       <label className="form-check-label">
