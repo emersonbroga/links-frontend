@@ -77,3 +77,8 @@ https://github.com/thiagocdn/MaratonaJS-Javascript-NodeJS-ReactJS
 https://github.com/zmmarina/LinkManager
 
 
+### Artigos
+
+https://www.linkedin.com/posts/zandramonteiro_minha-primeira-api-activity-6685425786519883776-o8Up/
+
+https://medium.com/@zandramonteiro/minha-primeira-api-c1e3b7f0b2da
