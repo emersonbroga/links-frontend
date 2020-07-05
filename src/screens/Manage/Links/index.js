@@ -44,7 +44,9 @@ const Links = ({ links, linkRemove, linkToRemove, linkList, setLinkToRemove }) =
                   <span className="text-primary clearfix">{link.url}</span>
                 </div>
                 <div className="ml-auto p-2 clearfix">
-                  <Link to={`/manage/links/edit/${link.id}`}>Edit</Link>
+                  <Link to={`/manage/links/edit/${link.id}`} className="mr-2">
+                    Edit
+                  </Link>
                   <button className="btn btn-clear" onClick={deleteClick}>
                     Delete
                   </button>
