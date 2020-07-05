@@ -1,4 +1,12 @@
-import { LINK_CREATE, LINK_LIST, LINK_GET, LINK_UPDATE, LINK_TO_REMOVE, LINK_REMOVE } from '../actions/LinkActions';
+import {
+  LINK_CREATE,
+  LINK_LIST,
+  LINK_GET,
+  LINK_UPDATE,
+  LINK_TO_REMOVE,
+  LINK_REMOVE,
+  LINK_CLEAR,
+} from '../actions/LinkActions';
 
 const initialState = {
   link: null,
@@ -34,6 +42,9 @@ export default function (state = initialState, action) {
     case LINK_REMOVE: {
       const links = state.links.filter((link) => link.id !== state.linkToRemove.id);
       return { ...state, linkToRemove: null, links };
+    }
+    case LINK_CLEAR: {
+      return { ...state, link: null };
     }
     default: {
       return state;

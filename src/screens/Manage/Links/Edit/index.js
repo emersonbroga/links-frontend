@@ -4,15 +4,19 @@ import Layout from '../../../Layouts/Manage';
 import FormGroup from '../../../../components/FormGroup';
 import FormCheck from '../../../../components/FormCheck';
 
-import { linkGet, linkUpdate } from '../../../../actions/LinkActions';
+import { linkGet, linkUpdate, linkClear } from '../../../../actions/LinkActions';
 import { getFormData } from '../../../../helpers/form';
 import { connect } from 'react-redux';
 
-const Edit = ({ link, linkGet, linkUpdate }) => {
+const Edit = ({ link, linkGet, linkUpdate, linkClear }) => {
   const { id } = useParams();
 
   useEffect(() => {
     linkGet(id);
+
+    return () => {
+      linkClear();
+    };
   }, [id, linkGet]);
 
   const submitHandler = (e) => {
@@ -43,4 +47,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { linkGet, linkUpdate })(Edit);
+export default connect(mapStateToProps, { linkGet, linkUpdate, linkClear })(Edit);
